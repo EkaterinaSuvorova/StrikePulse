@@ -1,7 +1,7 @@
 package ek.suvorova.strike.pulse.controller;
 
 import ek.suvorova.strike.pulse.service.CategoryService;
-import ek.suvorova.strike.pulse.to.CategoryTO;
+import ek.suvorova.strike.pulse.dto.CategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public CategoryTO createCategory(CategoryTO categoryTO) {
-        return categoryService.saveCategory(categoryTO);
+    public CategoryDto createCategory(CategoryDto categoryDto) {
+        return categoryService.saveCategory(categoryDto);
     }
 }

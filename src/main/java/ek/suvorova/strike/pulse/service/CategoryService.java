@@ -1,8 +1,9 @@
 package ek.suvorova.strike.pulse.service;
 
 import ek.suvorova.strike.pulse.entity.Category;
+import ek.suvorova.strike.pulse.mapper.CategoryMapper;
 import ek.suvorova.strike.pulse.repository.CategoryRepository;
-import ek.suvorova.strike.pulse.to.CategoryTO;
+import ek.suvorova.strike.pulse.dto.CategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +11,17 @@ import org.springframework.stereotype.Service;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
-    public CategoryTO saveCategory(CategoryTO categoryTO) {
-        //todo add mapper
-        Category category = new Category();
-        category.setName(categoryTO.getName());
-        Category categorySaved = categoryRepository.save(category);
-        CategoryTO categoryTOSaved = new CategoryTO();
-        categoryTOSaved.setName(categorySaved.getName());
-        return categoryTOSaved;
+    public CategoryDto saveCategory(CategoryDto categoryDto) {
+        Category categorySaved = categoryRepository.save(
+                categoryMapper.categoryDtoToCategory(categoryDto));
+        return categoryMapper.categoryToCategoryDto(categorySaved);
     }
 }
